@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(readxl)
+data <- read_excel("data.xlsx")
+```
+
+1) Get basic statistics for age and sales
+```{r}
+summary(data$Age)
+summary(data$Sales)
+```
+
+2) Get distribution of ages
+```{r}
+par(mfcol = c(2, 1))
+hist(data$Age)
+boxplot(data$Age, horizontal = T)
+```
+
+3) Get distribution of sales amount 
+```{r}
+par(mfcol = c(2, 1))
+hist(data$Sales)
+boxplot(data$Sales, horizontal = T, range = 0)
+```
+
+4) Plot sales amount per age
+```{r}
+plot(data$Age, data$Sales)
+```
+
+5) Develop sale strategy based on data
+```{r}
+cor(data$Age, data$Sales)
+```
+
+```{r}
+range = (data$Age %/% 10) * 10
+ret=aggregate(c(data$Sales), list(range), sum)
+
+v = ret$x
+names(v) = ret$Group.1
+barplot(v)
+```
